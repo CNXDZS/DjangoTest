@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <form method='post' action="/save" {% csrf_token %}>
+        标题:<input type="text" name="title">
+        内容:<input type="text" name="content">
+        <input type='submit' value='提交'>
+        </form>
+        {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+        {% endif %}
+</form>
+</body>
+</html>

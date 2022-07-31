@@ -33,7 +33,11 @@ urlpatterns = [
     #127.0.0.1:8000/birthday/year/month/day
     url(r'^birthday/(?P<y>\d{4})/(?P<m>\d{1,2})/(?P<d>\d{1,2})', views.birthday_view),
     #127.0.0.1:8000/birthday/month/day/year
-    url(r'^birthday/(?P<m>\d{1,2})/(?P<d>\d{1,2})/(?P<y>\d{4})', views.birthday_view)
+    url(r'^birthday/(?P<m>\d{1,2})/(?P<d>\d{1,2})/(?P<y>\d{4})', views.birthday_view),
+    # 127.0.0.1:8000/record
+    url(r'^record$', views.record_view),
+    url(r'^login$', views.login),
+    url(r'^save$', views.save)
 
 
 
