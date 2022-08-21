@@ -5,6 +5,17 @@ import time
 from django.contrib import messages
 from loguru import logger
 from django.shortcuts import render
+from mysite1.sql import MysqlClient
+from mysite1.config import note_table
+
+MYSQL_PE = {
+    "host": "127.0.0.1",
+    # "host": "120.26.93.126",
+    "user": "root",
+    "passwd": "admin",
+    "db": "django",
+    "port": 3306,
+}
 
 
 # def page_view(request):
@@ -131,7 +142,7 @@ def login(request):
         password = post_dict.get("password")
         user_info = {"dingyujie": "123456"}
         if user_info.get(username) and user_info[username] == password:
-            html ="""
+            html = """
             <br>登陆了</br>
                     <form method='post' action="/save" {% csrf_token %}>
         标题:<input type="text" name="title">
@@ -153,11 +164,14 @@ def login(request):
 
 def save(request):
     if request.method == 'POST':
+        django_client = MysqlClient(MYSQL_PE)
         post_dict = request.POST
         title = post_dict.get("title")
         content = post_dict.get("content")
+        django_client.insert(column=["title", "content"], info=([title,content]),table=note_table)
         save_content(title, content)
         messages.success(request, '提交信息完成')
-        return render(request,"save.html")
+        django_client.close()
+        return render(request, "save.html")
     if request.method == 'GET':
-        return render(request,"save.html")
+        return render(request, "save.html")
